@@ -41,7 +41,16 @@ HEIGHT = 1000 * 9 // 16
 #  spill out
 # move the background
 # the aim of the game
-asters = [Actor('a'), Actor('b')]
+asters = [Actor('a2'), Actor('b2',(555,555))]
+asters[0].m = 1000
+asters[1].m = 3000 
+asters[0].r = 3000
+asters[1].r = 500 
+# v[0] is vx. v[1] is vy 
+asters[0].v = [0.0]*2
+asters[1].v = [0.0]*2
+# a = k*m2/r^2
+k = 4
 rab = Actor('pokemon2s', (0, 0))
 ACCEL = 1.0
 DRAG = 0.9
@@ -142,17 +151,24 @@ def update_stars(dt):
     ]
 
 
-def line_towards(la, lb, scale):
-    d = lb - la + 1000
-    return la+d/scale, lb-d/scale
+def line_towards(scale):
+    asters[0].v,asters[1].v = change_v(asters[0],asters[1])
+
+    a,b = v_caused_change(asters[0],asters[1]) 
+    return a,b
 
 
 def move_towards():
     a = asters[0]
     b = asters[1]
     scale = 300
-    asters[0].x, asters[1].x = line_towards(a.x, b.x, scale)
-    a.y, b.y = line_towards(a.y, b.y, scale)
+    # p,q = line_towards(scale)
+    asters[0].v,asters[1].v = change_v(a,b) 
+    p,q = v_caused_change(a,b) 
+    asters[0].x ,asters[0].y = p 
+    asters[1].x ,asters[1].y = q 
+    asters[0].angle += 0.5 
+    asters[1].angle += 0.5 
 # star
 
 
@@ -164,7 +180,7 @@ def pos_update():
     mainspeed = 10
     if keyboard[keys.SPACE]:
         # rab.x += mainspeed
-        rab.angle += 0.3
+        rab.angle += 1 
     if keyboard[keys.UP]:
         rab.y -= mainspeed
     if keyboard[keys.DOWN]:
@@ -204,8 +220,10 @@ def draw():
 
 
 def on_mouse_down(pos):
-    global centerx, centery
-    centerx, centery = pos
+    print(f"you just click{pos}") 
+    print(asters[0].pos,asters[1].pos) 
+    global centerx, centery 
+    centerx, centery = pos 
     # print(rab.pos)
     # print(rab.anchor) 
     # print(rab.angle)

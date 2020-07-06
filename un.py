@@ -1,6 +1,7 @@
 import pgzrun
 from math import *
 from random import *
+from somefunc import * 
 from pgzero.actor import Actor
 from pgzero.loaders import sounds
 from pgzero.clock import clock
@@ -180,8 +181,16 @@ def update(dt):
     pos_update()
 
 def rabAddtion_draw():
-    pos = rab.topleft
-    pos = rab.anchor()
+    # pos = rab.topleft
+    # pos = rab.anchor()
+    x,y = rab.topleft 
+    a,b = x,y
+    x,y = swing(x,y) 
+    # if a == x and b == y:
+    #     print('??')
+    screen.draw.line((x,y),(x+randint(11,30),y+randint(11,30)),rand_color())
+    screen.draw.line((x,y),(x+randint(11,30),y+randint(11,30)),rand_color())
+    screen.draw.line((x,y),(x+randint(11,30),y+randint(11,30)),rand_color())
 
 def draw():
     screen.clear()
@@ -189,7 +198,7 @@ def draw():
         actor.draw()
     draw_stars()
     rab.draw()
-    # rabAddtion_draw() 
+    rabAddtion_draw() 
     # screen.fill('red')
     # screen.blit('background',(0,0))
 
@@ -197,9 +206,9 @@ def draw():
 def on_mouse_down(pos):
     global centerx, centery
     centerx, centery = pos
-    # print(rab.pos())
-    print(rab.anchor) 
-    print(rab.angle)
+    # print(rab.pos)
+    # print(rab.anchor) 
+    # print(rab.angle)
 
 
 def on_key_down(key):

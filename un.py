@@ -6,7 +6,7 @@ from pgzero.loaders import sounds
 from pgzero.clock import clock
 from pgzero.screen import Screen
 from pgzero.rect import Rect
-from pgzero.keyboard import keys 
+from pgzero.keyboard import keys
 screen: Screen  # 类型标注
 TITLE = 'undetermined'
 
@@ -33,9 +33,15 @@ class Gameclass:
 WIDTH = 1000
 HEIGHT = 1000 * 9 // 16
 # star
-
+# to be realize
+# rab is restricted by asters
+# addtion of particles
+# the action rab can do
+#  spill out
+# move the background
+# the aim of the game
 asters = [Actor('a'), Actor('b')]
-rab = Actor('pokemon2s',(0,0)) 
+rab = Actor('pokemon2s', (0, 0))
 ACCEL = 1.0
 DRAG = 0.9
 TRAIL_LENGTH = 2
@@ -152,10 +158,12 @@ def move_towards():
 def update_asters():
     move_towards()
 
+
 def pos_update():
     mainspeed = 10
     if keyboard[keys.SPACE]:
-        rab.x += mainspeed    
+        # rab.x += mainspeed
+        rab.angle += 0.3
     if keyboard[keys.UP]:
         rab.y -= mainspeed
     if keyboard[keys.DOWN]:
@@ -165,10 +173,15 @@ def pos_update():
     if keyboard[keys.RIGHT]:
         rab.x += mainspeed
 
+
 def update(dt):
     update_stars(dt)
     update_asters()
-    pos_update() 
+    pos_update()
+
+def rabAddtion_draw():
+    pos = rab.topleft
+    pos = rab.anchor()
 
 def draw():
     screen.clear()
@@ -176,16 +189,21 @@ def draw():
         actor.draw()
     draw_stars()
     rab.draw()
+    # rabAddtion_draw() 
     # screen.fill('red')
     # screen.blit('background',(0,0))
+
 
 def on_mouse_down(pos):
     global centerx, centery
     centerx, centery = pos
+    # print(rab.pos())
+    print(rab.anchor) 
+    print(rab.angle)
 
 
 def on_key_down(key):
-    pass 
+    pass
     # mainspeed = 10
     # if key is keys.UP:
     #     rab.y -= mainspeed

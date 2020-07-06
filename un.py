@@ -6,6 +6,7 @@ from pgzero.loaders import sounds
 from pgzero.clock import clock
 from pgzero.screen import Screen
 from pgzero.rect import Rect
+from pgzero.keyboard import keys 
 screen: Screen  # 类型标注
 TITLE = 'undetermined'
 
@@ -34,7 +35,7 @@ HEIGHT = 1000 * 9 // 16
 # star
 
 asters = [Actor('a'), Actor('b')]
-
+rab = Actor('pokemon2s',(0,0)) 
 ACCEL = 1.0
 DRAG = 0.9
 TRAIL_LENGTH = 2
@@ -151,28 +152,49 @@ def move_towards():
 def update_asters():
     move_towards()
 
+def pos_update():
+    mainspeed = 10
+    if keyboard[keys.SPACE]:
+        rab.x += mainspeed    
+    if keyboard[keys.UP]:
+        rab.y -= mainspeed
+    if keyboard[keys.DOWN]:
+        rab.y += mainspeed
+    if keyboard[keys.LEFT]:
+        rab.x -= mainspeed
+    if keyboard[keys.RIGHT]:
+        rab.x += mainspeed
 
 def update(dt):
     update_stars(dt)
     update_asters()
-
+    pos_update() 
 
 def draw():
     screen.clear()
     for actor in asters:
         actor.draw()
     draw_stars()
+    rab.draw()
     # screen.fill('red')
     # screen.blit('background',(0,0))
-
 
 def on_mouse_down(pos):
     global centerx, centery
     centerx, centery = pos
 
 
-def on_key_down():
-    pass
+def on_key_down(key):
+    pass 
+    # mainspeed = 10
+    # if key is keys.UP:
+    #     rab.y -= mainspeed
+    # elif key is keys.DOWN:
+    #     rab.y += mainspeed
+    # elif key is keys.LEFT:
+    #     rab.x -= mainspeed
+    # elif key is keys.RIGHT:
+    #     rab.x += mainspeed
 
 
 pgzrun.go()
